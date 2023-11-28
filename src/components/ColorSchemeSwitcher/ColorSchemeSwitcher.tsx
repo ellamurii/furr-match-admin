@@ -4,10 +4,12 @@ import {
   useMantineColorScheme,
   useMantineTheme,
 } from "@mantine/core";
+import { useDebouncedValue } from "@mantine/hooks";
 import { IconMoon,  IconSun } from "@tabler/icons-react";
 
 const ColorSchemeSwitcher = () => {
   const { colorScheme, setColorScheme } = useMantineColorScheme();
+  const [debouncedColorScheme] = useDebouncedValue(colorScheme, 150);
 
   const theme = useMantineTheme();
 
@@ -32,7 +34,7 @@ const ColorSchemeSwitcher = () => {
       size="md"
       onLabel={sunIcon}
       offLabel={moonIcon}
-      checked={colorScheme === "light"}
+      checked={debouncedColorScheme === "light"}
       onChange={(event) =>
         setColorScheme(event.currentTarget.checked ? "light" : "dark")
       }
